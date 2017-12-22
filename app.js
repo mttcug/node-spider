@@ -5,6 +5,7 @@ var fs=require('fs');
 url = 'http://movie.douban.com/subject/25724855/'; //这里是举个例子而已，豆瓣的具体的电影网址可以自己替换
 request(url,(err,res,body)=>{handleDB(body);});
 /*request(url).pipe(fs.createWriteStream('movie.txt'));*/
+var IMDBLink='';
 function handleDB(html){
     var $ = cheerio.load(html); //引入cheerio的方法。这样的引入方法可以很好的结合jQuery的用法。
     var info = $('#info');
@@ -42,7 +43,7 @@ function handleDB(html){
     var DB = '- 豆  瓣评分：' + DBScore + '/10' + '(' + 'from' + DBVotes + 'users' + ')';
     // IMDBLink
     IMDBLink = $('#info').children().last().prev().attr('href');
-
+    startRequest(IMDBLink);
     var data = movieName + '\r\n' + directories + '\r\n' + starsName + '\r\n' + runTime + '\r\n' + kinds + '\r\n'+ DB +'\r\n';
     // 输出文件
     fs.appendFile('dbmovie.txt', data, 'utf-8', function(err){
@@ -50,4 +51,31 @@ function handleDB(html){
         else console.log('大体信息写入成功'+'\r\n' + data)
     });
 }
+
+function startRequest(IMDBLink) {
+    var Link = '';
+    request(IMDBLink,(err,res,body)=>{
+        handleIMDB(body);
+});
+
+    function handleIMDB(Link){
+        var $ = cheerio.load(Link);
+        // 获取IMDB评分
+        var IMDBScore = $('.ratingValue span').filter(function(i,el){
+            return $(this).attr('itemprop') === 'ratingValue';
+        }).text();
+        // 获取IMDB评分人数
+        var IMDBVotes = $('.small').filter(function(i,el){
+            return $(this).attr('itemprop') === 'ratingCount';
+        }).text();
+        // 字符串拼接
+        var IMDB = '- IMDB评分：' + IMDBScore + '/10' + '(' + 'from' + IMDBVotes + 'users' + ')' + '\r\n';
+        // 输出文件
+        fs.appendFile('dbmovie.txt', IMDB, 'utf-8', function(err){
+            if (err) throw err;
+            else console.log('IMDB信息写入成功' + '\r\n' + IMDB)
+        });
+    }
+}
+
 console.log("fs:",fs);
