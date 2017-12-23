@@ -2,9 +2,11 @@ var request=require('request');
 var cheerio =require('cheerio');
 var fs=require('fs');
 
+/*
 url = 'http://movie.douban.com/subject/25724855/'; //这里是举个例子而已，豆瓣的具体的电影网址可以自己替换
+
 request(url,(err,res,body)=>{handleDB(body);});
-/*request(url).pipe(fs.createWriteStream('movie.txt'));*/
+/!*request(url).pipe(fs.createWriteStream('movie.txt'));*!/
 var IMDBLink='';
 function handleDB(html){
     var $ = cheerio.load(html); //引入cheerio的方法。这样的引入方法可以很好的结合jQuery的用法。
@@ -78,4 +80,23 @@ function startRequest(IMDBLink) {
     }
 }
 
-console.log("fs:",fs);
+*/
+
+
+
+
+
+url='http://www.iqiyi.com/dianying_new/i_list_paihangbang.html';
+request(url,(err,res,body)=>{
+    var $=cheerio.load(body);
+    var list=$(".wrapper-piclist li");
+
+    list.each((i,ele)=>{
+        var file_name=$(ele).find('.site-piclist_info_title').find('a').text();
+        var sub_name=$(ele).find('.site-piclist_info_describe').text();
+        var score=$(ele).find('.score').children().text();
+        var more_info_url=$(ele).find('.site-piclist_info_title').find('a').attr("href");
+        var file_img=$(ele).find('.site-piclist_pic_link img').attr('src')
+        console.log("text:",file_name,sub_name,score,more_info_url,file_img);
+    });
+});
