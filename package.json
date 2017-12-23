@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "node app.js"
+    "start": "nodemon ./bin/www",
+    "test": "nodemon ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -24,8 +24,19 @@
   },
   "homepage": "https://github.com/mttcug/node-spider#readme",
   "dependencies": {
+    "body-parser": "~1.17.1",
     "cheerio": "^1.0.0-rc.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "jade": "~1.11.0",
     "mongoose": "^4.13.7",
-    "request": "^2.83.0"
+    "morgan": "~1.8.1",
+    "nunjucks": "^3.0.1",
+    "request": "^2.83.0",
+    "serve-favicon": "~2.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.3"
   }
 }
