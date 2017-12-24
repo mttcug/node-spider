@@ -6,3 +6,16 @@ body {
 a {
   color: #00B7FF;
 }
+#plant ul{
+  list-style: none;
+}
+#plant ul li{
+  list-style: none;
+  display: inline-block;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 2px lightgray;
+}
+#plant ul li a{
+  display: inline-block;
+}

@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
+    <link rel="stylesheet" href="../public/stylesheets/style.css">
 </head>
-<body>
+<body id="plant">
 <p>植物列表</p>
 <ul>
-    {% for item in plant %}
-    <li>{{item.plant_name}}</li>
+    {% for item in plants %}
+    <li>
+        <a href="{{item.detail_url}}">
+            <img src="{{item.plant_pic}}" alt="{{item.plant_pic}}">
+            <p class="plant-name">{{item.plant_name}}</p>
+            <p class="plant-description">{{item.description}}</p>
+        </a>
+    </li>
     {% endfor %}
 </ul>
 </body>

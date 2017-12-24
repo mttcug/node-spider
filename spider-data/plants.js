@@ -127,7 +127,8 @@ function getPlantsInfo(html,i) {
         var plant_name = $(ele).find('.title').text();
     var desc = $(ele).find('.desc').text();
     var more_info_url = $(ele).find('.title').attr("href");
-    var plant_pic = $(ele).find('img').attr('src');
+    var plant_pic = $(ele).find('img').data('original');
+    console.log("picUrl:",plant_pic);
     var obj = {
         plant_name: plant_name,
         description: desc,
@@ -144,10 +145,10 @@ function saveToDB(plant) {
         var pl = new plantModel(v);
     pl.save(function (err) {
         if (err) {
-            console.log('保存失败')
+            console.log('保存失败');
             return;
         }
-        console.log('meow');
+        //console.log('meow');
     });
 })
 }
