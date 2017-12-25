@@ -22,7 +22,7 @@ var plantModel = mongoose.model('plant', plantSchema);
 router.get('/',function(req, res, next){
     plantModel.find(function (err, result) {
     if (err) return console.error(err);
-    console.log("res:",result);
+    //console.log("res:",result);
     res.render('index', {
         title: 'Express',
         plants:result
